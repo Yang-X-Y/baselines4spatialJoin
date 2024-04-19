@@ -173,8 +173,8 @@ public class sedonaSpatialJoin
         if (args.length>0) {
             isLocal = false;
             homePath = "/home/yxy/data/spatialJoin/";
-            poiPath = homePath+"osm21_pois_WKT.csv";
-            roadsPath = homePath+"lineStrings.csv";
+            poiPath = homePath+"osm21_pois.csv";
+            roadsPath = homePath+"roads.csv";
             parksPath = homePath+"parks_polygon.csv";
             lakesPath = homePath+"lakes_polygon.csv";
             indexDataType=(args[0].split(";"))[0];

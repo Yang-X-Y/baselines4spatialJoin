@@ -20,8 +20,8 @@ object spatialsparkSpatialJoins {
         val sc = new SparkContext(conf)
 
         val homePath = "/home/yxy/data/spatialJoin/"
-        val poiPath = homePath + "osm21_pois_WKT.csv"
-        val roadsPath = homePath + "lineStrings.csv"
+        val poiPath = homePath + "osm21_pois.csv"
+        val roadsPath = homePath + "roads.csv"
         val parksPath = homePath + "parks_polygon.csv"
         val lakesPath = homePath + "lakes_polygon.csv"
 
