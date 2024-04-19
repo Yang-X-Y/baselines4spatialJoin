@@ -92,7 +92,7 @@ object spatialsparkSpatialJoins {
             matchedPairs = PartitionedSpatialJoin(sc, leftGeometryById, rightGeometryById, SpatialOperator.Intersects, 0.0, partConf)
             resultNum = matchedPairs.count()
             val endJoin = System.nanoTime()
-            val joinTime = (endJoin - analyseTime) / 1E9
+            val joinTime = (endJoin - endAnalyse) / 1E9
             val totalTime = (endJoin - startLoad)/ 1E9
             val resultStr = "************************ spatialSpark ************************"+
                     "\nleftData: " + leftDataType +
