@@ -17,8 +17,6 @@
  * under the License.
  */
 
-import Util.JsonUtil;
-import com.alibaba.fastjson.JSONObject;
 import org.apache.sedona.core.enums.FileDataSplitter;
 import org.apache.sedona.core.enums.GridType;
 import org.apache.sedona.core.enums.IndexType;
@@ -34,9 +32,7 @@ import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.serializer.KryoSerializer;
 import org.apache.spark.storage.StorageLevel;
 import org.locationtech.jts.geom.Geometry;
-
 import java.io.Serializable;
-import java.util.stream.Collectors;
 
 /**
  * The Class Example.
