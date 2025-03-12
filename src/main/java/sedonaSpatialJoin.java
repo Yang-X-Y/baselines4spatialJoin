@@ -187,8 +187,8 @@ public class sedonaSpatialJoin
             roadsPath = homePath+"lineStrings_100K.csv";
             parksPath = homePath+"parks_id_100k.csv";
             lakesPath = homePath+"lakes_id_100k.csv";
-            indexDataType="parks";
-            queryDataType="lakes";
+            indexDataType="pois";
+            queryDataType="parks";
             partitionNum=20;
             isCache=true;
         }
