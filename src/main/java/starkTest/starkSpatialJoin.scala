@@ -1,6 +1,6 @@
 package starkTest
 import dbis.stark.STObject
-
+import dbis.stark.spatial.JoinPredicate
 import dbis.stark.spatial.partitioner.{BSPartitioner, SpatialGridPartitioner}
 import org.apache.sedona.core.serde.SedonaKryoRegistrator
 import org.apache.spark.SpatialRDD.convertSpatialPlain
@@ -41,14 +41,17 @@ object starkSpatialJoin {
       queryRDD = loadData(queryDataType)
 
 
-      val parti = BSPartitioner(indexRDD, 0.5, 100, pointsOnly = true)
+      val parti = BSPartitioner(indexRDD, 1, 100, pointsOnly = false)
       val indexRDDIndex=indexRDD.liveIndex(parti, order = 5)
-      val result = indexRDDIndex.contains(STObject("POINT( 8.474516 53.20708 )"))
+//      val result = indexRDDIndex.contains(STObject("POINT( 8.474516 53.20708 )"))
+
+      val result = indexRDDIndex.join(queryRDD, JoinPredicate.INTERSECTS)
+
       println(result.count())
 
 
       sc.stop()
-      val resultStr = s"""************************ sedona ************************
+      val resultStr = s"""************************ stark ************************
                          |indexDataType: $indexDataType
                          |queryDataType: $queryDataType
                          |resultNum: $resultSize
@@ -94,7 +97,7 @@ object starkSpatialJoin {
         lakesPath = homePath + "lakes_id_100k.csv"
         buildingsPath = homePath + "buildings_1M.csv"
         indexDataType = "parks"
-        queryDataType = "parks"
+        queryDataType = "lakes"
         partitionNum = 20
       }
       buildSparkContext(isLocal)
