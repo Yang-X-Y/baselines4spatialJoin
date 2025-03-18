@@ -25,7 +25,7 @@
             <groupId>org.apache.spark</groupId>
             <artifactId>spark-core_2.11</artifactId>
             <version>${spark.version}</version>
-            <scope>provided</scope>
+<!--            <scope>provided</scope>-->
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.apache.spark/spark-sql -->
@@ -33,7 +33,7 @@
             <groupId>org.apache.spark</groupId>
             <artifactId>spark-sql_2.11</artifactId>
             <version>${spark.version}</version>
-            <scope>provided</scope>
+<!--            <scope>provided</scope>-->
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.apache.spark/spark-catalyst -->
@@ -41,7 +41,7 @@
             <groupId>org.apache.spark</groupId>
             <artifactId>spark-catalyst_2.11</artifactId>
             <version>${spark.version}</version>
-            <scope>provided</scope>
+<!--            <scope>provided</scope>-->
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.apache.sedona/sedona-core-2.4 -->
@@ -64,11 +64,11 @@
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/com.lihaoyi/fastparse -->
-<!--        <dependency>-->
-<!--            <groupId>com.lihaoyi</groupId>-->
-<!--            <artifactId>fastparse_2.11</artifactId>-->
-<!--            <version>0.4.3</version>-->
-<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>com.lihaoyi</groupId>-->
+        <!--            <artifactId>fastparse_2.11</artifactId>-->
+        <!--            <version>0.4.3</version>-->
+        <!--        </dependency>-->
 
         <dependency>
             <groupId>org.wololo</groupId>
@@ -111,35 +111,43 @@
             <version>1.1.0-25.2</version>
         </dependency>
 
-<!--        &lt;!&ndash; https://mvnrepository.com/artifact/me.simin/spatial-spark &ndash;&gt;-->
+        <!--        &lt;!&ndash; https://mvnrepository.com/artifact/me.simin/spatial-spark &ndash;&gt;-->
         <dependency>
             <groupId>me.simin</groupId>
             <artifactId>spatial-spark_2.11</artifactId>
             <version>${spatial-spark.version}</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/harsha2010/magellan -->
-<!--        <dependency>-->
-<!--            <groupId>harsha2010</groupId>-->
-<!--            <artifactId>magellan</artifactId>-->
-<!--            <version>1.0.5-s_2.11</version>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>stark</groupId>
+            <artifactId>stark</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/src/main/resources/libs/stark.jar</systemPath>
+        </dependency>
 
-<!--        <dependency>-->
-<!--            <groupId>magellan</groupId>-->
-<!--            <artifactId>magellan</artifactId>-->
-<!--            <version>1.0</version>-->
-<!--            <scope>system</scope>-->
-<!--            <systemPath>${basedir}/src/main/resources/libs/magellan.jar</systemPath>-->
-<!--        </dependency>-->
+        <!-- https://mvnrepository.com/artifact/harsha2010/magellan -->
+        <!--        <dependency>-->
+        <!--            <groupId>harsha2010</groupId>-->
+        <!--            <artifactId>magellan</artifactId>-->
+        <!--            <version>1.0.5-s_2.11</version>-->
+        <!--        </dependency>-->
+
+        <!--        <dependency>-->
+        <!--            <groupId>magellan</groupId>-->
+        <!--            <artifactId>magellan</artifactId>-->
+        <!--            <version>1.0</version>-->
+        <!--            <scope>system</scope>-->
+        <!--            <systemPath>${basedir}/src/main/resources/libs/magellan.jar</systemPath>-->
+        <!--        </dependency>-->
 
 
         <!-- https://mvnrepository.com/artifact/com.vividsolutions/jts -->
-<!--        <dependency>-->
-<!--            <groupId>com.vividsolutions</groupId>-->
-<!--            <artifactId>jts</artifactId>-->
-<!--            <version>1.13</version>-->
-<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>com.vividsolutions</groupId>-->
+        <!--            <artifactId>jts</artifactId>-->
+        <!--            <version>1.13</version>-->
+        <!--        </dependency>-->
 
     </dependencies>
 
