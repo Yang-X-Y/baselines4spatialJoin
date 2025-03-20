@@ -1,0 +1,5 @@
+package starkTest
+
+object starkRangQuery {
+
+}

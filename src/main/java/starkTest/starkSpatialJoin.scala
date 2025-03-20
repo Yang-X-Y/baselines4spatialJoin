@@ -1,6 +1,7 @@
 package starkTest
 import dbis.stark.STObject
 import dbis.stark.spatial.JoinPredicate
+import dbis.stark.spatial.indexed.RTreeConfig
 import dbis.stark.spatial.partitioner.{BSPartitioner, SpatialGridPartitioner}
 import org.apache.sedona.core.serde.SedonaKryoRegistrator
 import org.apache.spark.SpatialRDD.convertSpatialPlain
@@ -39,27 +40,43 @@ object starkSpatialJoin {
       val startLoadT = System.currentTimeMillis()
       indexRDD = loadData(indexDataType)
       queryRDD = loadData(queryDataType)
+      val endLoadT = System.currentTimeMillis()
+      loadTime = endLoadT - startLoadT
 
+      // partition data
+      val startPartitionT = System.currentTimeMillis()
+      val indexRDDNoSample = BSPartitioner(indexRDD, sideLength = 1, maxCostPerPartition = 10, pointsOnly = false)
+      val queryRDDNoSample = BSPartitioner(queryRDD, sideLength = 1, maxCostPerPartition = 10, pointsOnly = false)
+      val indexRDDPartitioned = indexRDD.partitionBy(indexRDDNoSample)
+      val queryRDDPartitioned = queryRDD.partitionBy(queryRDDNoSample)
+      val endPartitionT = System.currentTimeMillis()
+      partitionTime = endPartitionT - startPartitionT
 
-      val parti = BSPartitioner(indexRDD, 1, 100, pointsOnly = false)
-      val indexRDDIndex=indexRDD.liveIndex(parti, order = 5)
-//      val result = indexRDDIndex.contains(STObject("POINT( 8.474516 53.20708 )"))
+      // index data
+      val startIndexT = System.currentTimeMillis()
+      val indexRDDPartitionedIndex=indexRDDPartitioned.liveIndex(RTreeConfig(order = 5))
+      val endIndexT = System.currentTimeMillis()
+      indexTime = endIndexT - startIndexT
 
-      val result = indexRDDIndex.join(queryRDD, JoinPredicate.INTERSECTS)
-
-      println(result.count())
-
+      // join
+      val startJoinT = System.currentTimeMillis()
+      val joinResPlain = indexRDDPartitionedIndex.join(queryRDDPartitioned, JoinPredicate.INTERSECTS, None, oneToMany = true)
+      resultSize = joinResPlain.count()
+      val endJoinT = System.currentTimeMillis()
+      joinTime = endJoinT - startJoinT
+      totalTime = endJoinT - startLoadT
 
       sc.stop()
-      val resultStr = s"""************************ stark ************************
+
+      val resultStr = s"""************************ starkSpatialJoin************************
                          |indexDataType: $indexDataType
                          |queryDataType: $queryDataType
                          |resultNum: $resultSize
-                         |totalTime: $totalTime ms
                          |loadTime: $loadTime ms
                          |partitionTime: $partitionTime ms
                          |indexTime: $indexTime ms
                          |joinTime: $joinTime ms
+                         |totalTime: $totalTime ms
                          |""".stripMargin
       println(resultStr)
     }
@@ -67,7 +84,7 @@ object starkSpatialJoin {
     def buildSparkContext(local: Boolean): Unit = {
       if (sc != null) return
       val conf = new SparkConf()
-      conf.setAppName("sedona spatial join")
+      conf.setAppName("stark spatial join")
       conf.set("spark.serializer", classOf[KryoSerializer].getName)
       conf.set("spark.kryo.registrator", classOf[SedonaKryoRegistrator].getName)
       if (local) {
@@ -78,7 +95,7 @@ object starkSpatialJoin {
 
     def initParameters(args: Array[String]): Unit = {
       var isLocal = true
-      if (args.length > 0) {
+      if (!isLocal) {
         isLocal = false
         homePath = "/home/yxy/data/spatialJoin/"
         poiPath = homePath + "osm21_pois.csv"

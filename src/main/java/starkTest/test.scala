@@ -6,7 +6,7 @@ import org.apache.spark.api.java.JavaSparkContext
 //import org.apache.spark.api.java.JavaSparkContext
 
 
-object  tt {
+object  test {
 
   import dbis.stark._
   import org.apache.spark.SparkContext
