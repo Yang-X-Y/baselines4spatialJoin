@@ -59,6 +59,7 @@ object starkDistanceJoin {
 
     // join
     val startJoinT = System.currentTimeMillis()
+    //未实现 Distance Join
     val joinResPlain = indexRDDPartitionedIndex.join(queryRDDPartitioned, JoinPredicate.INTERSECTS, None, oneToMany = true)
     resultSize = joinResPlain.count()
     val endJoinT = System.currentTimeMillis()
